@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Akhillleeeee 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,500&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#071226;
+  --deep:#0d1f3d;
+  --royal:#1e3f8f;
+  --sky:#5fa8ff;
+  --ice:#eaf2ff;
+  --gold:#f6c945;
+  --pale:#cfe3ff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Quicksand',sans-serif;
+  background:var(--navy);
+  color:var(--ice);
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;}
+.cursor {
+  display: inline-block;
+  width: 2px;
+  background: white;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* ===== Starfield background ===== */
+#stars{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at top, #102246 0%, #050b1a 70%);
+}
+.star{
+  position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
+  opacity:0.6;animation:twinkle 3s infinite ease-in-out;
+}
+@keyframes twinkle{0%,100%{opacity:.2;}50%{opacity:1;}}
+
+/* ===== Password Gate ===== */
+#gate{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at center, #14264d 0%, #050b1a 100%);
+  flex-direction:column;text-align:center;padding:20px;
+}
+#gate h1{font-size:1.8rem;color:var(--gold);margin-bottom:6px;}
+#gate p{color:var(--pale);margin-bottom:24px;font-size:1rem;}
+#gate input{
+  background:rgba(255,255,255,0.07);
+  border:1px solid var(--sky);
+  color:var(--ice);
+  padding:14px 18px;border-radius:30px;
+  font-size:1rem;font-family:'Quicksand';
+  width:280px;text-align:center;outline:none;
+  letter-spacing:1px;
+}
+#gate input::placeholder{color:#9db4dd;}
+#gate button{
+  margin-top:18px;padding:12px 32px;border-radius:30px;border:none;
+  background:linear-gradient(135deg,var(--sky),var(--royal));
+  color:#fff;font-family:'Quicksand';font-weight:700;font-size:1rem;
+  cursor:pointer;transition:transform .2s, box-shadow .2s;
+}
+#gate button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(95,168,255,.4);}
+#gateError{color:#ff8a8a;margin-top:14px;height:18px;font-size:.9rem;}
+#gate .hint{margin-top:30px;font-size:.8rem;color:#6f88b8;}
+
+/* ===== Site (hidden until unlocked) ===== */
+#site{display:none;position:relative;z-index:1;}
+
+/* nav dots */
+#navDots{
+  position:fixed;right:18px;top:50%;transform:translateY(-50%);
+  z-index:50;display:flex;flex-direction:column;gap:14px;
+}
+#navDots a{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(255,255,255,0.25);
+  border:1px solid var(--sky);
+  display:block;transition:.3s;
+}
+#navDots a.active{background:var(--gold);box-shadow:0 0 10px var(--gold);}
+
+/* bgm control */
+#bgmBtn{
+  position:fixed;left:18px;top:18px;z-index:60;
+  background:rgba(255,255,255,.08);border:1px solid var(--sky);
+  color:var(--ice);width:44px;height:44px;border-radius:50%;
+  cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;
+}
+
+section{
+  height:100vh;width:100%;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 6vw 110px;position:relative;
+  overflow-y:auto;
+}
+section.active{display:flex;}
+section#page6{
+  height:auto;min-height:100vh;
+}
+section#page6.active{display:flex;}
+
+/* book-style next/prev controls */
+.pageNav{
+  position:fixed;bottom:22px;left:0;right:0;
+  display:flex;justify-content:center;gap:16px;z-index:55;
+}
+.pageNav button{
+  background:rgba(255,255,255,.06);border:1px solid var(--sky);color:var(--ice);
+  padding:10px 26px;border-radius:30px;cursor:pointer;font-family:'Quicksand';font-weight:600;
+  font-size:.9rem;transition:.2s;
+}
+.pageNav button:hover{background:rgba(95,168,255,.2);transform:translateY(-2px);}
+.pageNav button:disabled{opacity:.3;cursor:not-allowed;}
+.pageNum{
+  position:fixed;bottom:28px;left:22px;color:#6f88b8;font-size:.8rem;z-index:55;
+}
+
+.eyebrow{
+  letter-spacing:3px;text-transform:uppercase;font-size:.75rem;
+  color:var(--gold);margin-bottom:10px;font-weight:700;
+}
+
+/* ===== Page 1: Our Story ===== */
+#page1 h1{font-size:clamp(2.2rem,6vw,3.6rem);text-align:center;color:var(--ice);}
+#page1 .underline{width:60px;height:3px;background:var(--gold);margin:18px auto 30px;border-radius:2px;}
+.story-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:900px;margin:0 auto 30px;
+}
+.ph{
+  background:linear-gradient(135deg,var(--royal),#10254e);
+  border:1px dashed var(--sky);
+  border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--pale);font-size:.8rem;text-align:center;padding:10px;
+  aspect-ratio:1/1;overflow:hidden;
+}
+.ph img{width:100%;height:100%;object-fit:cover;}
+#page1 .story-text{max-width:640px;text-align:center;color:var(--pale);line-height:1.8;font-size:1.05rem;}
+
+/* ===== Page 2: Gallery with reveal ===== */
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:700px;width:100%;
+}
+@media(min-width:700px){.gallery-grid{grid-template-columns:repeat(4,1fr);}}
+.gallery-item{
+  cursor:pointer;border-radius:18px;overflow:hidden;
+  aspect-ratio:3/4;background:linear-gradient(135deg,#15295a,#0d1f3d);
+  border:1px solid rgba(95,168,255,.4);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transition:transform .3s;
+}
+.gallery-item:hover{transform:translateY(-6px);}
+.gallery-item img{width:100%;height:100%;object-fit:cover;}
+.gallery-item .lbl{position:absolute;bottom:8px;font-size:.75rem;color:var(--pale);}
+
+#lightbox{
+  position:fixed;inset:0;background:rgba(3,8,20,.92);z-index:80;
+  display:none;align-items:center;justify-content:center;flex-direction:column;padding:24px;
+}
+#lightbox .box{
+  background:var(--deep);border:1px solid var(--sky);border-radius:20px;
+  max-width:500px;width:100%;padding:24px;text-align:center;
+}
+#lightbox .ph{aspect-ratio:4/3;margin-bottom:18px;}
+#lightbox p{color:var(--pale);line-height:1.7;}
+#lightbox button{
+  margin-top:18px;background:none;border:1px solid var(--sky);color:var(--ice);
+  padding:8px 24px;border-radius:30px;cursor:pointer;
+}
+
+/* ===== Page 3: Memory game ===== */
+#memGrid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:480px;width:100%;
+}
+.card{
+  aspect-ratio:3/4;border-radius:10px;cursor:pointer;position:relative;
+  transform-style:preserve-3d;transition:transform .5s;
+}
+.card.flip{transform:rotateY(180deg);}
+.card .face{
+  position:absolute;inset:0;border-radius:10px;backface-visibility:hidden;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.card .front{background:linear-gradient(135deg,var(--royal),#0d1f3d);border:1px solid var(--sky);color:var(--gold);font-size:1.4rem;}
+.card .back{background:#16244a;transform:rotateY(180deg);}
+.card .back img{width:100%;height:100%;object-fit:cover;}
+.card.matched .back{box-shadow:0 0 0 3px var(--gold) inset;}
+#memStatus{margin-top:20px;color:var(--pale);}
+#memReset{
+  margin-top:16px;background:none;border:1px solid var(--sky);color:var(--ice);
+  padding:8px 24px;border-radius:30px;cursor:pointer;
+}
+
+/* ===== Page 4: Slideshow ===== */
+#slideshow{
+  width:100%;max-width:600px;aspect-ratio:4/3;position:relative;
+  border-radius:20px;overflow:hidden;border:1px solid var(--sky);
+}
+.slide{
+  position:absolute;inset:0;opacity:0;transition:opacity 1s ease;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--royal),#0d1f3d);
+}
+.slide.active{opacity:1;}
+.slide img{width:100%;height:100%;object-fit:cover;}
+.slide .lbl{position:absolute;bottom:0;width:100%;background:linear-gradient(transparent,rgba(0,0,0,.6));
+  padding:30px 14px 10px;text-align:center;font-size:.85rem;color:var(--pale);}
+#dots{display:flex;gap:8px;margin-top:16px;}
+#dots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);}
+#dots span.active{background:var(--gold);}
+
+/* ===== Page 5: Surprise ===== */
+#countdown{font-size:clamp(1.8rem,6vw,3rem);font-family:'Fraunces',serif;color:var(--gold);letter-spacing:2px;margin:20px 0 30px;}
+#unlockBtn{
+  background:linear-gradient(135deg,var(--gold),#e0a020);
+  border:none;color:#1a1300;font-weight:700;padding:16px 40px;border-radius:40px;
+  font-size:1.1rem;cursor:pointer;box-shadow:0 0 30px rgba(246,201,69,.4);
+  transition:transform .2s;
+}
+#unlockBtn:hover{transform:scale(1.05);}
+#unlockBtn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;}
+#surprise{display:none;text-align:center;max-width:560px;}
+#surprise .gift{font-size:4rem;margin-bottom:10px;animation:bounce 1.6s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+#surprise p{color:var(--pale);line-height:1.9;font-size:1.05rem;margin-top:14px;}
+
+/* ===== Page 6: Reasons ===== */
+#reasonsList{
+  max-width:760px;width:100%;display:flex;flex-direction:column;gap:10px;
+}
+.reason{
+  background:rgba(255,255,255,.04);border-left:3px solid var(--gold);
+  padding:12px 18px;border-radius:0 12px 12px 0;
+  opacity:0;transform:translateX(-12px);
+  transition:opacity .6s ease, transform .6s ease;
+  font-size:.95rem;color:var(--pale);
+}
+.reason.show{opacity:1;transform:translateX(0);}
+.reason b{color:var(--gold);margin-right:8px;font-family:'Fraunces',serif;}
+
+.footer-note{margin-top:50px;text-align:center;color:#6f88b8;font-size:.8rem;}
+</style>
+</head>
+<body>
+
+<div id="stars"></div>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <h1>A little something for you, Akhil 🎂</h1>
+  <p>Enter the password: (where we all met[all small letters])</p>
+  <input id="pwInput" type="text" placeholder="type here..." autocomplete="off">
+  <br>
+  <button onclick="checkPassword()">Unlock</button>
+  <div id="gateError"></div>
+  <div class="hint">psst... it's a place, not a date 😉</div>
+</div>
+
+<!-- AUDIO: soft background music (pages 1-5) -->
+<audio id="bgm" loop>
+  <!-- Replace this src with your own soft/lofi mp3 file, e.g. "music/soft-bgm.mp3" -->
+  <source src="kabira.mp3" type="audio/mpeg">
+</audio>
+<button id="bgmBtn" onclick="toggleBgm()" title="Play/Pause music">🔇</button>
+
+<!-- AUDIO: Kabira clip (1:05 -> 1:40), plays after Unlock is clicked -->
+<audio id="kabira" preload="auto">
+  <!-- Put your own legally-obtained Kabira mp3 file in the same folder and set the filename below -->
+  <source src="kabira.mp3" type="audio/mpeg">
+</audio>
+
+<div id="navDots">
+  <a href="javascript:void(0)" class="active" onclick="goToPage(1)"></a>
+  <a href="javascript:void(0)" onclick="goToPage(2)"></a>
+  <a href="javascript:void(0)" onclick="goToPage(3)"></a>
+  <a href="javascript:void(0)" onclick="goToPage(4)"></a>
+  <a href="javascript:void(0)" onclick="goToPage(5)"></a>
+  <a href="javascript:void(0)" onclick="goToPage(6)"></a>
+</div>
+
+<div class="pageNum" id="pageNum">Page 1 / 6</div>
+<div class="pageNav">
+  <button id="prevBtn" onclick="prevPage()">‹ Back</button>
+  <button id="nextBtn" onclick="nextPage()">Next ›</button>
+</div>
+
+<div id="site">
+
+  <!-- PAGE 1: OUR STORY -->
+  <section id="page1">
+    <div class="eyebrow">Page One</div>
+    <h1>Our Story</h1>
+    <div class="underline"></div>
+    <div class="story-grid">
+      <div class="ph"><img src="aphoto1.jpeg"></div>
+<div class="ph"><img src="aphoto2.jpeg"></div>
+<div class="ph"><img src="aphoto3.jpeg"></div>
+    </div>
+    <p class="story-text">
+      It started somewhere ordinary and turned into something none of us planned for — late night calls, inside jokes nobody else gets, and a friendship that just kept growing into a family. From random conversations to being each other's go-to people, this is us, Akhil. We're not just friends, we're a family that chose each other. Here's to all the chapters we've already written together, and the ones still left to come.
+    </p>
+  </section>
+
+  <!-- PAGE 2: GALLERY -->
+  <section id="page2">
+    <div class="eyebrow">Page Two</div>
+    <h1>Pick a Memory</h1>
+    <div class="underline"></div>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox(0)">
+      <img src="aphoto7.jpeg">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(1)">
+            <img src="aphoto5.jpeg">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(2)">
+      <img src="aphoto14.jpeg">
+      </div>
+      <div class="gallery-item" onclick="openLightbox(3)">
+      <img src="aphoto6.jpeg">
+      </div>
+    </div>
+  </section>
+
+  <div id="lightbox">
+    <div class="box">
+      <div class="ph" id="lbImg">📷</div>
+      <p id="lbText"></p>
+      <button onclick="closeLightbox()">close</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3: MEMORY GAME -->
+  <section id="page3">
+    <div class="eyebrow">Page Three</div>
+    <h1>Memory Match</h1>
+    <div class="underline"></div>
+    <div id="memGrid"></div>
+    <div id="memStatus">Find all the matching pairs 💙</div>
+    <button id="memReset" onclick="initMemoryGame()">Restart</button>
+  </section>
+
+  <!-- PAGE 4: SLIDESHOW -->
+  <section id="page4">
+    <div class="eyebrow">Page Four</div>
+    <h1>Our Album</h1>
+    <div class="underline"></div>
+    <div id="slideshow"></div>
+    <div id="dots"></div>
+  </section>
+
+  <!-- PAGE 5: SURPRISE -->
+  <section id="page5">
+    <div class="eyebrow">Page Five</div>
+    <h1>Your Surprise</h1>
+    <div id="countdown">--:--:--</div>
+    <button id="unlockBtn" onclick="unlockSurprise()" disabled>Click to Unlock Your Surprise 🎁</button>
+    <div id="surprise">
+      <div class="gift">🎁</div>
+      <h2 style="color:var(--gold);">Happy Birthday, Akhileeeeee(My all time fav client)!</h2>
+      <p>
+        From the random memes at 2am to the silences that never feel awkward — you've become one of the most important people in our lives. You make hard days lighter and good days even better, for all of us. We're not just friends, we're family, and we hope this year gives you everything you deserve and more. Thank you for being exactly who you are. We're so lucky to have you as our family.
+        <br><br>
+        🎈 <i>Happiest birthday akhilllleeee.......
+          We didn't plan to like u this much... but here we are...
+        Annoyed,attached,and stuck with u forever💕 </i>
+      </p>
+    </div>
+  </section>
+
+  <!-- PAGE 6: REASONS -->
+  <section id="page6">
+    <div class="eyebrow">Page Six</div>
+    <h1>100 Reasons We Love You</h1>
+    <div class="underline"></div>
+    <div id="reasonsList"></div>
+    
+    <div class="footer-note">made with 💙 for Akhil's birthday</div>
+  </section>
+
+<!-- PAGE 7: FIGHTS & CHAOS 😂 -->
+<section id="page7">
+  <div class="eyebrow">Page Seven</div>
+  <h1>
+  <span id="fightText"></span><span class="cursor"></span>
+</h1>
+</section>
+</div>
+
+<script>
+/* ---------- starfield ---------- */
+const starsContainer = document.getElementById('stars');
+for(let i=0;i<90;i++){
+  const s = document.createElement('div');
+  s.className='star';
+  s.style.left = Math.random()*100+'%';
+  s.style.top = Math.random()*100+'%';
+  s.style.animationDelay = (Math.random()*3)+'s';
+  s.style.width = s.style.height = (Math.random()*2+1)+'px';
+  starsContainer.appendChild(s);
+}
+
+/* ---------- password gate ---------- */
+function checkPassword(){
+  const val = document.getElementById('pwInput').value.trim().toLowerCase();
+  const err = document.getElementById('gateError');
+  if(val === 'nitc'){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('site').style.display='block';
+    goToPage(1);
+    initMemoryGame();
+    initSlideshow();
+    initReasons();
+    startCountdown();
+    /* try to auto-start the soft bgm right after unlocking (page 1-5 music) */
+    const bgmAudio = document.getElementById('bgm');
+    if(bgmAudio.querySelector('source').src){
+      bgmAudio.play().then(()=>{
+        bgmOn = true;
+        document.getElementById('bgmBtn').textContent = '🔊';
+      }).catch(()=>{ /* autoplay blocked, user can tap the button */ });
+    }
+  } else {
+    err.textContent = "that's not it... try again 💭";
+    document.getElementById('pwInput').style.borderColor = '#ff8a8a';
+  }
+}
+document.getElementById('pwInput').addEventListener('keydown', e=>{
+  if(e.key==='Enter') checkPassword();
+});
+
+/* ---------- bgm ---------- */
+let bgmOn = false;
+function toggleBgm(){
+  const audio = document.getElementById('bgm');
+  const btn = document.getElementById('bgmBtn');
+  if(!audio.src || audio.src.endsWith('/')){ btn.textContent='🎵'; return; }
+  if(bgmOn){ audio.pause(); btn.textContent='🔇'; }
+  else { audio.play().catch(()=>{}); btn.textContent='🔊'; }
+  bgmOn = !bgmOn;
+}
+
+/* ---------- book-style page navigation ---------- */
+const sections = document.querySelectorAll('#site section');
+const navLinks = document.querySelectorAll('#navDots a');
+const totalPages = sections.length;
+let currentPage = 1;
+
+function goToPage(n){
+  if(n < 1 || n > totalPages) return;
+  sections.forEach(s=>s.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+  navLinks.forEach((a,i)=> a.classList.toggle('active', i === n-1));
+  currentPage = n;
+  document.getElementById('pageNum').textContent = `Page ${n} / ${totalPages}`;
+  document.getElementById('prevBtn').disabled = (n === 1);
+  document.getElementById('nextBtn').disabled = (n === totalPages);
+  document.getElementById('site').scrollTop = 0;
+  window.scrollTo(0,0);
+
+  /* pause the soft bgm once we leave page 5, since the Kabira clip takes over from there */
+  const bgmAudio = document.getElementById('bgm');
+  if(n > 5 && bgmOn){
+    bgmAudio.pause();
+  } else if(n <= 5 && bgmOn){
+    bgmAudio.play().catch(()=>{});
+  }
+
+  if(n === 7){
+  document.getElementById("fightText").innerHTML = "...";
+  setTimeout(() => {
+    document.getElementById("fightText").innerHTML="";
+  i = 0;
+  j = 0;
+  typeFightText();
+  },1000);
+}
+}
+function nextPage(){ goToPage(currentPage+1); }
+function prevPage(){ goToPage(currentPage-1); }
+
+/* ---------- gallery lightbox ---------- */
+const galleryTexts = [
+  "proof we survived this day😭",
+  "One of those random outings that turned into a core memory for the whole group💖.",
+  "my fav photo😍",
+  "This photo basically sums up our entire little family💫."
+];
+const galleryImages = [
+  "aphoto7.jpeg",
+  "aphoto5.jpeg",
+  "aphoto14.jpeg",
+  "aphoto6.jpeg"
+];
+
+function openLightbox(i) {
+  const lightbox = document.getElementById("lightbox");
+
+  lightbox.style.display = "flex";
+  lightbox.innerHTML = `
+  <div style="
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:30px;
+    max-width:900px;
+    width:100%;
+  ">
+
+    <!-- TEXT LEFT -->
+    <div style="
+      flex:1;
+      color:#cfe3ff;
+      font-size:1.1rem;
+      line-height:1.6;
+      text-align:left;
+    ">
+      ${galleryTexts[i]}
+    </div>
+
+    <!-- IMAGE RIGHT -->
+    <div style="flex:1; display:flex; justify-content:center;">
+      <img src="${galleryImages[i]}" 
+           style="max-width:100%; max-height:80vh; border-radius:15px;">
+    </div>
+
+  </div>
+
+  <!-- CLOSE BUTTON -->
+  <span onclick="closeLightbox()" 
+    style="
+      position:absolute;
+      top:20px;
+      right:30px;
+      font-size:30px;
+      cursor:pointer;
+    ">
+    ×
+  </span>
+`;
+}
+function closeLightbox(){
+  document.getElementById('lightbox').style.display='none';
+}
+
+/* ---------- memory matching game (uses OUR photos, in pairs) ---------- */
+/* Replace each "src" below with the SAME photo twice (once per card in the pair) */
+const memoryPhotos = [
+  {id:'p1', src:'aphoto9.jpeg', label:'Photo 1'},
+  {id:'p2', src:'aphoto8.jpeg', label:'Photo 2'},
+  {id:'p3', src:'aphoto11.jpeg', label:'Photo 3'},
+  {id:'p4', src:'aphoto12.jpeg', label:'Photo 4'}
+];
+let flipped = [], matchedCount = 0, lock = false;
+function initMemoryGame(){
+  const grid = document.getElementById('memGrid');
+  grid.innerHTML = '';
+  flipped = []; matchedCount = 0; lock = false;
+  document.getElementById('memStatus').textContent = 'Find all the matching pairs 💙';
+  let deck = [...memoryPhotos, ...memoryPhotos].sort(()=>Math.random()-0.5);
+  deck.forEach((photo)=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.id = photo.id;
+    const backContent = photo.src
+      ? `<img src="${photo.src}" alt="${photo.label}">`
+      : `<div class="ph" style="width:100%;height:100%;border:none;border-radius:0;font-size:.65rem;">📷<br>${photo.label}</div>`;
+    card.innerHTML = `
+      <div class="face front">💙</div>
+      <div class="face back">${backContent}</div>
+    `;
+    card.addEventListener('click', ()=>flipCard(card));
+    grid.appendChild(card);
+  });
+}
+function flipCard(card){
+  if(lock || card.classList.contains('flip') || card.classList.contains('matched')) return;
+  card.classList.add('flip');
+  flipped.push(card);
+  if(flipped.length === 2){
+    lock = true;
+    setTimeout(()=>{
+      const [a,b] = flipped;
+      if(a.dataset.id === b.dataset.id){
+        a.classList.add('matched'); b.classList.add('matched');
+        matchedCount++;
+        if(matchedCount === memoryPhotos.length){
+          document.getElementById('memStatus').textContent = 'We matched them all! 🎉 Just like our friendship 💙';
+        }
+      } else {
+        a.classList.remove('flip'); b.classList.remove('flip');
+      }
+      flipped = []; lock = false;
+    }, 700);
+  }
+}
+
+/* ---------- slideshow ---------- */
+const slideTexts = [
+  "Memory #1","Memory #2","Memory #3","Memory #4",
+  "Memory #5","Memory #6","Memory #7","Memory #8"
+];
+let slideIdx = 0, slideInterval;
+function initSlideshow(){
+  const ss = document.getElementById('slideshow');
+  const dotsWrap = document.getElementById('dots');
+  ss.innerHTML = ''; dotsWrap.innerHTML = '';
+  slideTexts.forEach((t,i)=>{
+    const s = document.createElement('div');
+    s.className = 'slide' + (i===0?' active':'');
+    const slideImages = [
+  "aphoto4.jpeg",
+  "aphoto10.jpeg",
+  "aphoto13.jpeg",
+  "aphoto15.jpeg",
+  "aphoto16.jpeg",
+  "aphoto18.jpeg",
+  "aphoto17.jpeg",
+  "aphoto20.jpeg"
+];
+
+s.innerHTML = `
+  <img src="${slideImages[i]}">
+  <div class="lbl">${t}</div>
+`;
+    ss.appendChild(s);
+    const d = document.createElement('span');
+    if(i===0) d.classList.add('active');
+    dotsWrap.appendChild(d);
+  });
+  slideInterval = setInterval(nextSlide, 2800);
+}
+function nextSlide(){
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('#dots span');
+  slides[slideIdx].classList.remove('active');
+  dots[slideIdx].classList.remove('active');
+  slideIdx = (slideIdx+1) % slides.length;
+  slides[slideIdx].classList.add('active');
+  dots[slideIdx].classList.add('active');
+}
+
+/* ---------- countdown + surprise ---------- */
+function startCountdown(){
+  const target = new Date('2026-07-01T00:00:00');
+  const el = document.getElementById('countdown');
+  const btn = document.getElementById('unlockBtn');
+  function tick(){
+    const now = new Date();
+    const diff = target - now;
+    if(diff <= 0){
+      el.textContent = "It's here! 🎉";
+      btn.disabled = false;
+      clearInterval(timer);
+      return;
+    }
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff/(1000*60*60))%24);
+    const m = Math.floor((diff/(1000*60))%60);
+    const s = Math.floor((diff/1000)%60);
+    el.textContent = `${d}d ${h}h ${m}m ${s}s`;
+  }
+  tick();
+  const timer = setInterval(tick, 1000);
+}
+
+/* Kabira clip: plays only from 1:05 (65s) to 1:40 (100s), then stops */
+const KABIRA_START = 65;   // 1:05
+const KABIRA_END   = 100;  // 1:40
+function playKabiraClip(){
+  const kabira = document.getElementById('kabira');
+  // pause the soft bgm while the surprise clip plays
+  const bgmAudio = document.getElementById('bgm');
+  if(bgmOn){ bgmAudio.pause(); }
+
+  kabira.currentTime = KABIRA_START;
+  kabira.play().catch(()=>{ /* if autoplay is blocked, user may need to tap somewhere first */ });
+
+  // stop exactly at 1:40
+  kabira.ontimeupdate = function(){
+    if(kabira.currentTime >= KABIRA_END){
+      kabira.pause();
+      kabira.ontimeupdate = null;
+    }
+  };
+}
+
+function unlockSurprise(){
+  document.getElementById('unlockBtn').style.display='none';
+  document.getElementById('surprise').style.display='block';
+  playKabiraClip();
+}
+
+/* ---------- 100 reasons ---------- */
+const reasonStarters = [
+  "You always know how to make all of us laugh, even on the worst days.",
+  "You never judge any of us, no matter how weird we get.",
+  "Our conversations never feel boring, even after years.",
+  "You remember the little things we mention in passing.",
+  "You're brutally honest when we actually need it.",
+  "You celebrate our wins like they're your own.",
+  "You show up, even when it's inconvenient.",
+  "Your sense of humor matches ours perfectly.",
+  "You give the best advice without making us feel small.",
+  "You make ordinary days feel like an adventure.",
+  "You never make us feel like we're too much.",
+  "You're someone we can sit in silence with comfortably.",
+  "You always check up on us when we go quiet.",
+  "You make fun of us in the most loving way.",
+  "You're fiercely loyal to the people you care about.",
+  "You always have our backs, no questions asked.",
+  "You make every plan more fun just by being there.",
+  "You're patient with us even when we overthink everything.",
+  "You never let us settle for less than we deserve.",
+  "You're one of the few people who truly gets all of us.",
+  "You make tough days feel a little lighter.",
+  "knows tooooooooo much abt us...still didnt run away.",
+  "You give the most comforting hugs.",
+  "You're not afraid to call us out when we're wrong.",
+  "You make us feel safe being completely ourselves.",
+  "You're insanely talented and never brag about it.",
+  "You have the best taste in music and memes.",
+  "You always know exactly what to say.",
+  "You gives us free entertainment without even trying.",
+  "You make every group chat ten times funnier.",
+  "You never let an argument ruin our family.",
+  "You're one of the most genuine people we know.",
+  "You inspire all of us to be better without even trying.",
+  "You always make time for us, no matter how busy you are.",
+  "You're someone we trust completely.",
+  "You laugh at your own jokes and it's somehow endearing.",
+  "You're incredibly supportive of our dreams.",
+  "You never let any of us feel alone in tough times.",
+  "You listen to our drama like its your full-time job.",
+  "You make the most random topics interesting.",
+  "You always send the perfect meme at the perfect time.",
+  "You're so easy to talk to about anything.",
+  "You never make us feel guilty for needing space.",
+  "You're incredibly thoughtful with gifts and gestures.",
+  "You make all of us want to be better friends too.",
+  "You have a heart of gold, even if you hide it sometimes.",
+  "You're someone we can be completely unfiltered with.",
+  "You make our friendship feel effortless.",
+  "You're always honest, even when it's hard.",
+  "You bring out the most fun version of all of us.",
+  "You act like you dont care....but cares the most.",
+  "You never let any of us down when it matters most.",
+  "You're the friend everyone wishes they had.",
+  "You make even boring days fun when you're around.",
+  "You're so easy to be vulnerable with.",
+  "You always know how to calm us down.",
+  "You celebrate the small wins with us.",
+  "You're endlessly curious and it's contagious.",
+  "You make us laugh until our stomachs hurt.",
+  "You're someone we genuinely admire.",
+  "You give the best, most honest opinions.",
+  "You're always willing to learn and grow with us.",
+  "You make our inside jokes last for years.",
+  "You're so generous with your time and energy.",
+  "You never make plans you don't intend to keep.",
+  "You're incredibly understanding, even when we mess up.",
+  "You make every one of us feel like we matter.",
+  "You're a great listener, even at 3am.",
+  "You're not afraid to be goofy and weird with us.",
+  "You make us believe in genuine friendships.",
+  "You're consistent — you don't change with the seasons.",
+  "You're someone we can always count on.",
+  "You make difficult conversations feel safe.",
+  "You have the most contagious energy.",
+  "You roast us all the time,but never let anyone else roast us.",
+  "You never compete with any of us — you cheer for us.",
+  "You make our friend group feel complete.",
+  "You're someone we genuinely look forward to seeing.",
+  "You give the best late-night advice.",
+  "Even after fights,we still choose each other and act like nothing happened.",
+  "You make our problems feel smaller just by listening.",
+  "You're incredibly self-aware and it's refreshing.",
+  "You make us feel like home, wherever we are.",
+  "You're someone we'd choose as family over and over again.",
+  "You're hilarious without even trying.",
+  "You're so easy to plan trips and outings with.",
+  "You make our memories worth holding onto.",
+  "You're never boring to be around.",
+  "You're incredibly hardworking and it motivates all of us.",
+  "You're a great example of loyalty.",
+  "You make us feel understood without explaining much.",
+  "You're someone we genuinely respect.",
+  "You're always there during our chaotic moments.",
+  "You're so easy to forgive and be forgiven by.",
+  "You bring balance into all of our lives.",
+  "You're someone we want in our lives for the long run.",
+  "You make every birthday and celebration special for everyone.",
+  "You're an amazing listener and an even better talker.",
+  "You're irreplaceable, Akhilee — simple as that.",
+  "Because we're not just friends, we're a family.",
+  "And the 100th reason: you're just you, and that's moreee than enough for all of us."
+];
+function initReasons(){
+  const wrap = document.getElementById('reasonsList');
+  wrap.innerHTML = '';
+  reasonStarters.forEach((txt, i)=>{
+    const div = document.createElement('div');
+    div.className = 'reason';
+    div.innerHTML = `<b>${String(i+1).padStart(2,'0')}.</b>${txt}`;
+    wrap.appendChild(div);
+  });
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.classList.add('show');
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reason').forEach(r=>observer.observe(r));
+}
+const fightLines = [
+  "we might fight...",
+  "roast each other...",
+  "and act like we don’t care...",
+  "but at the end of the day",
+  "its always you❤️...",
+  "No matter what happens... you're still stuck with us.",
+  "No escape🩵",
+  "because not everyone gets a best friend like you",
+  "and honestly...",
+  "we are so luckyy :)"
+
+];
+
+let i = 0;
+let j = 0;
+
+function typeFightText() {
+  if (i < fightLines.length) {
+    if (j < fightLines[i].length) {
+      document.getElementById("fightText").innerHTML += fightLines[i].charAt(j);
+      j++;
+      setTimeout(typeFightText, 70);
+    } else {
+      document.getElementById("fightText").innerHTML += "<br><br>";
+      i++;
+      j = 0;
+      setTimeout(typeFightText, 800);
+    }
+  }
+}
+</script>
+
+</body>
+</html>
